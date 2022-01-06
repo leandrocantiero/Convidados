@@ -10,16 +10,20 @@ import campagnolo.cantiero.convidados.service.repository.GuestRepository
 class GuestFormViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mContext = application.applicationContext
-    private val mGuestRepository: GuestRepository = GuestRepository.getInstance(mContext)
+    private val mGuestRepository: GuestRepository = GuestRepository(mContext)
 
-    private var mSaveGuest = MutableLiveData<Pair<Boolean, String>>()
-    val saveGuest: LiveData<Pair<Boolean, String>> = mSaveGuest
+    private var mSaveGuest = MutableLiveData<Boolean>()
+    val saveGuest: LiveData<Boolean> = mSaveGuest
 
     private var mGuest = MutableLiveData<GuestModel>()
     val loadGuest: LiveData<GuestModel> = mGuest
 
     fun save(id: Int, name: String, presence: Boolean) {
-        val guest = GuestModel(id, name, presence)
+        val guest = GuestModel().apply {
+            this.id = id
+            this.name = name
+            this.presence = presence
+        }
         mSaveGuest.value = mGuestRepository.save(guest)
     }
 

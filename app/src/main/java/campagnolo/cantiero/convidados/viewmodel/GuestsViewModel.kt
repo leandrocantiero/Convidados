@@ -11,8 +11,7 @@ import campagnolo.cantiero.convidados.service.repository.GuestRepository
 
 class GuestsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mContext = application.applicationContext
-    private val mGuestRepository = GuestRepository.getInstance(mContext)
+    private val mGuestRepository = GuestRepository(application.applicationContext)
 
     private val mGuestList = MutableLiveData<List<GuestModel>>()
     var guestList: LiveData<List<GuestModel>> = mGuestList
@@ -30,6 +29,6 @@ class GuestsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun remove(id: Int) {
-        mGuestRepository.remove(id)
+        mGuestRepository.remove(mGuestRepository.getById(id))
     }
 }

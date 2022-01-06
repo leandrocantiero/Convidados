@@ -44,7 +44,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setObservers() {
         mViewModel.saveGuest.observe(this, Observer {
-            if (it.first) {
+            if (it) {
                 Toast.makeText(
                     applicationContext,
                     getString(R.string.sucesso_message),
@@ -53,20 +53,11 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
                 finish()
             } else {
-                if (it.second != "") {
-                    Toast.makeText(
-                        applicationContext,
-                        it.second,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.falha_message),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.falha_message),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
